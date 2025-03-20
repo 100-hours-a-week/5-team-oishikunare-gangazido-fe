@@ -21,6 +21,7 @@ function MapPage() {
 
   // 마커 필터링 타입 저장 상태 추가
   const [filterType, setFilterType] = useState("all");
+  console.log(filterType);
 
   // 순환 참조를 막기 위한 removeMarker 함수 ref
   const removeMarkerRef = useRef(null);
