@@ -30,7 +30,9 @@ jobs:
         run: npm ci
 
       - name: Build # 4 - 빌드
-        run: npm run build
+        run: |
+          echo "window._env_ = { KAKAO_MAP_API_KEY: '${{ secrets.KAKAO_MAP_API_KEY }}' };" > public/config.js
+          npm run build
 
       - name: Configure AWS Credentials # 5 - AWS 인증
         uses: aws-actions/configure-aws-credentials@v2
