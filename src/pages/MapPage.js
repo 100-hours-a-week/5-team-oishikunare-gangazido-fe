@@ -77,6 +77,16 @@ function MapPage() {
     loadKakaoMapScript();
   }, [loadKakaoMapScript]);
 
+  useEffect(() => {
+    fetch("/config.json") // config.json을 동적으로 로드
+      .then((response) => response.json())
+      .then((config) => {
+        window._env_ = config;
+        console.log("카카오 API 키 로드됨:", window._env_.KAKAO_MAP_API_KEY);
+      })
+      .catch((error) => console.error("환경변수 로드 실패", error));
+  }, []);
+
   // 마커 종류
   const markerImages = useRef([
     {
