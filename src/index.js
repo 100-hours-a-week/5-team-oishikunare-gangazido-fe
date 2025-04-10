@@ -9,7 +9,7 @@ const isProduction = window.location.hostname === "www.gangazido.com";
 
 if (isProduction) {
   Sentry.init({
-    dsn: "https://c6e701d229173a516b0ca281c3faf21f@sentry.yimtaejong.com/2",
+    dsn: "https://c150c56b42ca2c06cdaa3006e97d6594@sentry.yimtaejong.com/3",
     environment: "production",
     sendDefaultPii: true,
     integrations: [
