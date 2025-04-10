@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "semantic-release": "semantic-release",
     "commitlint": "commitlint --edit",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org kakao-tech-bootcamp --project gangazido ./build && sentry-cli sourcemaps upload --org kakao-tech-bootcamp --project gangazido ./build"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ktb-2nd --project gangazido ./build && sentry-cli --url https://sentry.yimtaejong.com/ sourcemaps upload --org ktb-2nd --project gangazido ./build"
   },
   "eslintConfig": {
     "extends": [
