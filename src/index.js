@@ -20,6 +20,11 @@ if (isProduction) {
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
   });
+  try {
+    throw new Error("🔥 Sentry index.js 오류 테스트입니다.");
+  } catch (err) {
+    Sentry.captureException(err);
+  }
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
