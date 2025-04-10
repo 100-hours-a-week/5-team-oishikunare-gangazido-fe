@@ -99,7 +99,7 @@ function App() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await fetch("/api/v1/users", {
+        const res = await fetch("/v1/users/me", {
           credentials: "include",
         });
         const result = await res.json();

@@ -8,7 +8,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@headlessui/react": "^2.2.0",
     "@sentry/cli": "^2.43.0",
-    "@sentry/react": "^9.10.1",
+    "@sentry/react": "^9.12.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
