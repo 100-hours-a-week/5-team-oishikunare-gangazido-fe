@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import useAuthStore from '../store/authStore';
 
 // 인증이 필요한 라우트를 위한 컴포넌트
 function ProtectedRoute() {
-  const { isAuthenticated, loading } = useAuth();
+  // Context API 대신 Zustand 스토어 사용
+  const { isAuthenticated, loading } = useAuthStore();
   const navigate = useNavigate();
 
   // 컴포넌트 마운트 시 인증 상태 확인 (추가적인 검증)

@@ -18,10 +18,21 @@ import ChatPage from "./pages/ChatPage";
 import PetInfo from "./pages/PetInfo";
 import PetEdit from "./pages/PetEdit";
 import PetRegister from "./pages/PetRegister";
-import { AuthProvider } from "./contexts/AuthContext";
+import useAuthStore from "./store/authStore";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  // Zustand 스토어 초기화
+  useEffect(() => {
+    // 인증 상태 초기화 및 주기적 확인을 위한 인터벌 설정
+    const intervalId = useAuthStore.getState().initialize();
+    
+    // 컴포넌트 언마운트 시 인터벌 정리
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   // 뷰포트 높이 설정을 위한 함수
   useEffect(() => {
     // 실제 뷰포트 높이를 계산하여 CSS 변수로 설정
@@ -122,32 +133,30 @@ function App() {
 
   return (
     <div className="app-container">
-      <AuthProvider>
-        <Router>
-          <div className="App">
-            <div className="mobile-container">
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/map" element={<MapPage />} />
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/profile/edit" element={<ProfileEdit />} />
-                  <Route
-                    path="/profile/password"
-                    element={<PasswordChange />}
-                  />
-                  <Route path="/chat" element={<ChatPage />} />
-                  <Route path="/pets" element={<PetInfo />} />
-                  <Route path="/pets/edit" element={<PetEdit />} />
-                  <Route path="/pets/register" element={<PetRegister />} />
-                </Route>
-                <Route path="/" element={<Navigate to="/map" />} />
-              </Routes>
-            </div>
+      <Router>
+        <div className="App">
+          <div className="mobile-container">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/map" element={<MapPage />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/edit" element={<ProfileEdit />} />
+                <Route
+                  path="/profile/password"
+                  element={<PasswordChange />}
+                />
+                <Route path="/chat" element={<ChatPage />} />
+                <Route path="/pets" element={<PetInfo />} />
+                <Route path="/pets/edit" element={<PetEdit />} />
+                <Route path="/pets/register" element={<PetRegister />} />
+              </Route>
+              <Route path="/" element={<Navigate to="/map" />} />
+            </Routes>
           </div>
-        </Router>
-      </AuthProvider>
+        </div>
+      </Router>
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPetInfo } from "../api/pet";
-import { useAuth } from "../contexts/AuthContext";
+import useAuthStore from "../store/authStore";
 
 function PetInfo() {
   const navigate = useNavigate();
-  const { isAuthenticated, loading: authLoading, logout } = useAuth();
+  const { isAuthenticated, loading: authLoading, logout } = useAuthStore();
   console.log(isAuthenticated);
   console.log(authLoading);
 

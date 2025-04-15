@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../api/user";
 import { logoutUser } from "../api/auth";
-import { useAuth } from "../contexts/AuthContext";
+import useAuthStore from "../store/authStore";
 
 function ProfilePage() {
   const navigate = useNavigate();
-  const { logout, isAuthenticated, loading: authLoading } = useAuth();
+  const { logout, isAuthenticated, loading: authLoading } = useAuthStore();
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

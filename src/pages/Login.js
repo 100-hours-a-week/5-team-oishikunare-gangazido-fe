@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { loginUser } from '../api/auth';
-import { useAuth } from '../contexts/AuthContext';
+import useAuthStore from '../store/authStore';
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location);
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
