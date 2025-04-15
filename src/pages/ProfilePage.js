@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../api/user";
 import { logoutUser } from "../api/auth";
-import { useAuth } from "../contexts/AuthContext";
+import { useAtomValue, useSetAtom } from 'jotai';
+import { isAuthenticatedAtom, loadingAtom, logoutAtom } from '../atoms/authAtoms';
 
 function ProfilePage() {
   const navigate = useNavigate();
-  const { logout, isAuthenticated, loading: authLoading } = useAuth();
+  
+  // jotai atoms 사용
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const authLoading = useAtomValue(loadingAtom);
+  const logout = useSetAtom(logoutAtom);
+  
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -46,7 +52,7 @@ function ProfilePage() {
         console.error("사용자 정보 로드 실패:", err);
         
         // 에러가 발생하면 무조건 로그인 페이지로 리다이렉트
-        if (logout) logout(); // AuthContext의 logout 함수 호출
+        logout(); // jotai logout atom 호출
         navigate('/login');
         return;
       } finally {
@@ -92,7 +98,7 @@ useEffect(() => {
       const response = await logoutUser();
       console.log(response);
 
-      // AuthContext의 로그아웃 함수 호출
+      // jotai logout atom 호출
       ////console.log(...)
       logout();
 

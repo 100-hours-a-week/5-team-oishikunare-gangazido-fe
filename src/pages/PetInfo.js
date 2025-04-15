@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPetInfo } from "../api/pet";
-import { useAuth } from "../contexts/AuthContext";
+import { useAtomValue, useSetAtom } from 'jotai';
+import { isAuthenticatedAtom, loadingAtom, logoutAtom } from '../atoms/authAtoms';
 
 function PetInfo() {
   const navigate = useNavigate();
-  const { isAuthenticated, loading: authLoading, logout } = useAuth();
+  
+  // jotai atoms 사용
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const authLoading = useAtomValue(loadingAtom);
+  const logout = useSetAtom(logoutAtom);
+  
   console.log(isAuthenticated);
   console.log(authLoading);
 
@@ -38,7 +44,7 @@ function PetInfo() {
         
         // 인증 오류(401) 처리 - 단순히 로그인 페이지로 리다이렉트
         if (error.response && error.response.status === 401) {
-          if (logout) logout(); // AuthContext의 logout 함수 호출
+          logout(); // jotai logout atom 호출
           navigate('/login');
           return;
         }

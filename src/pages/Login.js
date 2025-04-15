@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { loginUser } from '../api/auth';
-import { useAuth } from '../contexts/AuthContext';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { isAuthenticatedAtom, loginAtom } from '../atoms/authAtoms';
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location);
-  const { login, isAuthenticated } = useAuth();
+  
+  // jotai atoms 사용
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const login = useSetAtom(loginAtom);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);

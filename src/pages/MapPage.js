@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMapMarkers, registerMarker, deleteMarker } from "../api/map"; // axios 인스턴스로 정의된 API 제리 추가
-import { useAuth } from "../contexts/AuthContext"; // 기존 getUserInfo 대신 useAuth 훅 사용
+import { useAtomValue } from 'jotai';
+import { isAuthenticatedAtom, userAtom } from '../atoms/authAtoms';
 import { ToastContainer, toast } from "react-toastify"; // 토스트 메시지
 import "react-toastify/dist/ReactToastify.css";
 import { getNicknameByUserId } from "../api/user"; // 유저 닉네임 가져오기
@@ -25,8 +26,9 @@ function MapPage() {
   // 첫 페이지 모달
   const [showGuideModal, setShowGuideModal] = useState(true); // 실제로 보일지 여부
 
-  // 사용자 인증 상태
-  const { isAuthenticated, user } = useAuth(); // AuthContext에서 인증 상태 가져오기
+  // 사용자 인증 상태 (jotai 사용)
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const user = useAtomValue(userAtom);
   const userRef = useRef(null); // user 최신 값 유지용
 
   // 첫 페이지 모달 창

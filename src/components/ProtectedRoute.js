@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAtomValue } from 'jotai';
+import { isAuthenticatedAtom, loadingAtom } from '../atoms/authAtoms';
 
 // 인증이 필요한 라우트를 위한 컴포넌트
 function ProtectedRoute() {
-  const { isAuthenticated, loading } = useAuth();
+  // jotai atoms에서 상태 가져오기
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const loading = useAtomValue(loadingAtom);
   const navigate = useNavigate();
 
   // 컴포넌트 마운트 시 인증 상태 확인 (추가적인 검증)
