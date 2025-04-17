@@ -23,7 +23,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   // Zustand 스토어 초기화
-  throw new Error("Sentry test");
+  //throw new Error("Sentry test");
   useEffect(() => {
     // 인증 상태 초기화 및 주기적 확인을 위한 인터벌 설정
     const intervalId = useAuthStore.getState().initialize();
