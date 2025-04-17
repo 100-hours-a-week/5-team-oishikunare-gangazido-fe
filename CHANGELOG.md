@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## [1.28.1](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/compare/v1.28.0...v1.28.1) (2025-04-15)
+
+### 🐛 BUG FIXES
+
+* 줌레벨 낮은 상태에서 마커 클릭 시 이동하는 위치 수정 ([4f0758b](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/4f0758b66f798bc6e25c4db70097acaee021f79c))
+
+## [1.28.0](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/compare/v1.27.1...v1.28.0) (2025-04-15)
+
+### 🚀 NEW FEATURES
+
+* 현재위치 마커 표시 추가 ([1bbeb69](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/1bbeb69f41a78c72fc165a7c5221712d9b9b8c39))
+
+## [1.27.1](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/compare/v1.27.0...v1.27.1) (2025-04-15)
+
+### 🐛 BUG FIXES
+
+* 마커 등록 시 반려견 정보 안 뜨는 이슈 해결 ([145355a](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/145355a3d054ea722fbacb65f248c167adc56294))
+* 마커 삭제버튼 안 눌리는 것 수정 ([cf4ee2c](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/cf4ee2ccda2b72f3ef221d8c2615788064b9eac2))
+
+### 🎨 STYLES
+
+* 마커 create,fetch 모달 디자인 통일 ([22acfb7](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/22acfb7be11328934753e1c05fcb4704b7b21f24))
+* 마커 클릭 모달 창 radius 키우고 투명도 주기 ([d056ba7](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/d056ba738ab26aa86020cd8a6c5cde68ea155cc8))
+
 ## [1.27.0](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/compare/v1.26.3...v1.27.0) (2025-04-11)
 
 ### 🚀 NEW FEATURES
