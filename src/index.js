@@ -17,7 +17,7 @@ if (isProduction) {
   });
 } else {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DEV_DSN,
+    dsn: process.env.REACT_APP_SENTRY_DEV_DSN_ZUSTAND,
     environment: "development",
     integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: 1.0,
