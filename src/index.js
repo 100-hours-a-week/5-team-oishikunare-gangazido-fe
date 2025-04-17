@@ -15,6 +15,14 @@ if (isProduction) {
     tracesSampleRate: 1.0,
     sendDefaultPii: true,
   });
+} else {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DEV_DSN,
+    environment: "development",
+    integrations: [Sentry.browserTracingIntegration()],
+    tracesSampleRate: 1.0,
+  });
+
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
