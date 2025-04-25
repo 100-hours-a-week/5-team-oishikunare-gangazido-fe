@@ -8,7 +8,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@headlessui/react": "^2.2.0",
     "@sentry/cli": "^2.43.0",
-    "@sentry/react": "^9.11.0",
+    "@sentry/react": "^9.12.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
@@ -36,7 +36,7 @@
     "eject": "react-scripts eject",
     "semantic-release": "semantic-release",
     "commitlint": "commitlint --edit",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org kakao-tech-bootcamp --project gangazido ./build && sentry-cli sourcemaps upload --org kakao-tech-bootcamp --project gangazido ./build"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ktb-2nd --project gangazido ./build && sentry-cli --url https://sentry.yimtaejong.com/ sourcemaps upload --org ktb-2nd --project gangazido ./build"
   },
   "eslintConfig": {
     "extends": [

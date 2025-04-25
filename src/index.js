@@ -9,11 +9,16 @@ const isProduction = window.location.hostname === "www.gangazido.com";
 
 if (isProduction) {
   Sentry.init({
-    dsn: "https://3cf3be6e70f8e27208fe64b361fe341d@o4509066231611392.ingest.us.sentry.io/4509066245636096",
+    dsn: "https://c150c56b42ca2c06cdaa3006e97d6594@sentry.yimtaejong.com/3",
     environment: "production",
-    integrations: [Sentry.browserTracingIntegration()],
-    tracesSampleRate: 1.0,
     sendDefaultPii: true,
+    integrations: [
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration(),
+    ],
+    tracesSampleRate: 1.0,
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
   });
 }
 
