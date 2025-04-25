@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [1.28.2](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/compare/v1.28.1...v1.28.2) (2025-04-25)
+
+### 🐛 BUG FIXES
+
+* Sentry Self-host ([fddc871](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/fddc871f87f47c3c61c4a3e092c8add70aa9c070))
+* Sentry Self-host ([4b78c4c](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/4b78c4c008314aa936fa19a497165e8381deefd9))
+* Sentry Self-host ([c4a970e](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/c4a970eb2638877e63e8f87ecfb4d680b44909d4))
+* Sentry Self-host ([4f28134](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/4f28134ee7b21ad0cdbc98ea1cacc84e3980a5dd))
+* Sentry Settings ([969802f](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/969802f62263d688a0c8495696390ec370bc6c57))
+* Sentry Settings ([16bacc8](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/16bacc897631156da70c0e3af7a0da57032fa2dd))
+* Sentry Settings ([1dee637](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/commit/1dee6378c9eb4770ae776a94480418730415b0bb))
+
 ## [1.28.1](https://github.com/100-hours-a-week/5-team-oishikunare-gangazido-fe/compare/v1.28.0...v1.28.1) (2025-04-15)
 
 ### 🐛 BUG FIXES
