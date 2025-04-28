@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMapMarkers, registerMarker, deleteMarker } from "../api/map"; // axios 인스턴스로 정의된 API 제리 추가
 import useAuthStore from "../store/authStore"; // 기존 getUserInfo 대신 useAuth 훅 사용
+import useMarkerStore from "../store/markerStore"; // zustand 마커 스토어 추가
 import { ToastContainer, toast } from "react-toastify"; // 토스트 메시지
 import "react-toastify/dist/ReactToastify.css";
 import { getNicknameByUserId } from "../api/user"; // 유저 닉네임 가져오기
@@ -12,7 +13,7 @@ function MapPage() {
   const navigate = useNavigate();
   const mapContainer = useRef(null);  // 지도 DOM 참조
   const [map, setMap] = useState(null); // 카카오맵 객체
-  const [markers, setMarkers] = useState([]); // 마커 목록 상태
+  const { markers, setMarkers, addMarkerToStore, removeMarkerFromStore } = useMarkerStore();
   const markersRef = useRef([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isMapLoaded, setIsMapLoaded] = useState(false);  // 맵 로딩 완료 여부
@@ -256,7 +257,7 @@ function MapPage() {
     return 0; // 기본값
   };
 
-  // markers 상태가 변경될 때마다 ref 업데이트
+  // zustand로 가져온 markers 상태를 ref에 동기화
   useEffect(() => {
     markersRef.current = markers;
   }, [markers]);
@@ -850,8 +851,9 @@ function MapPage() {
       };
       console.log('markerinfo', markerInfo);
 
-      // 상태 업데이트
-      setMarkers((prev) => [...prev, markerInfo]);
+      // 상태 업데이트 - zustand 액션 사용
+      // setMarkers((prev) => [...prev, markerInfo]);
+      addMarkerToStore(markerInfo);
 
       // 클릭 이벤트 (인포윈도우 + 삭제) createMarkerFromModal (방금만든 마커 모달 클릭시)
       window.kakao.maps.event.addListener(marker, "click", async () => {
@@ -1018,24 +1020,23 @@ function MapPage() {
                 await deleteMarker(markerInfo.id);
                 overlay.setMap(null); // ✅ 커스텀 오버레이 닫기
 
-                // 👇 클러스터도 비우고 다시 마커를 불러와 강제 동기화
-                if (clusterRef.current) {
-                  clusterRef.current.clear();
-                }
+                // 직접 마커 ID로 스토어에서 제거
+                removeMarkerFromStore(markerInfo.id);
+                
+                // 변경된 스토어 값으로 UI 업데이트
+                fetchMarkersFromBackend();
 
-                fetchMarkersFromBackend(); // 🔁 최신 데이터로 다시 로드
-                // ✅ 토스트 메시지 추가
                 toast.success("마커가 삭제되었습니다!", {
                   position: "bottom-center",
                   autoClose: 2000,
                   style: {
-                    background: "#fffaf0", // 밝은 베이지
-                    color: "#4b2f1c", // 부드러운 갈색 텍스트
-                    border: "1px solid #f3e5ab", // 연한 베이지 테두리
+                    background: "#fffaf0",
+                    color: "#4b2f1c",
+                    border: "1px solid #f3e5ab",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                     fontWeight: "bold",
                   },
-                  icon: "🗑",
+                  icon: "🐾",
                 });
               } catch (err) {
                 console.error("삭제 실패:", err);
@@ -1605,6 +1606,11 @@ function MapPage() {
                 try {
                   await deleteMarker(markerInfo.id);
                   overlay.setMap(null);
+                  
+                  // 직접 마커 ID로 스토어에서 제거
+                  removeMarkerFromStore(markerInfo.id);
+                  
+                  // 변경된 스토어 값으로 UI 업데이트
                   fetchMarkersFromBackend();
 
                   toast.success("마커가 삭제되었습니다!", {
@@ -1731,47 +1737,35 @@ function MapPage() {
       setFilterType(type);
 
       const markersToShow = [];
+      const updatedMarkers = markers.map((markerInfo) => {
+        let shouldShow = false;
 
-      setMarkers((prev) => {
-        return prev.map((markerInfo) => {
-          let shouldShow = false;
+        // 내 마커 필터링
+        if (type === "mine") {
+          shouldShow = isAuthenticated && markerInfo.user_id === user?.userId;
+        } else {
+          // 기존 방식
+          shouldShow = markerInfo.type === type || type === "all";
+        }
 
-          // 내 마커 필터링
-          if (type === "mine") {
-            shouldShow = isAuthenticated && markerInfo.user_id === user?.userId;
-          } else {
-            // 기존 방식
-            shouldShow = markerInfo.type === type || type === "all";
-          }
+        // 항상 setMap(null) 처리해두기 (중복 방지) 모바일 위해
+        markerInfo.marker.setMap(null);
 
-          // if (shouldShow) {
-          //   markersToShow.push(markerInfo.marker);
-          //   if (!markerInfo.marker.getMap()) {
-          //     markerInfo.marker.setMap(map);
-          //   }
-          // } else {
-          //   if (markerInfo.marker.getMap()) {
-          //     markerInfo.marker.setMap(null);
-          //   }
-          // }
+        if (shouldShow) {
+          markersToShow.push(markerInfo.marker);
+        }
 
-          // 항상 setMap(null) 처리해두기 (중복 방지) 모바일 위해
-          markerInfo.marker.setMap(null);
-
-          if (shouldShow) {
-            markersToShow.push(markerInfo.marker);
-          }
-
-          return markerInfo;
-        });
+        return markerInfo;
       });
+      
+      // zustand 액션 사용하여 markers 갱신
+      setMarkers(updatedMarkers);
 
       // 클러스터 새로 만들기 (생략 가능하긴 함)
       if (clusterRef.current) {
         clusterRef.current.clear();
         clusterRef.current.setMap(null);
       }
-
 
       // 클러스터 추가 전에 모든 마커 숨기기 모바일위해 추가
       markersRef.current.forEach((markerInfo) => {
@@ -2289,6 +2283,7 @@ function MapPage() {
             </div>
             <span className="text-xs mt-1 font-medium">반려견 정보</span>
           </button>
+
         </div>
       </nav>
 
@@ -2351,3 +2346,4 @@ function MapPage() {
 }
 
 export default MapPage;
+
